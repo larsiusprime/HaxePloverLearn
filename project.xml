@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="StenoPlatformer" package="ploverlearn.stenoplatformer" version="1.0.0" company="Plover" />
+	<app main="Main" path="Export" file="StenoPlatformer" />
+	
+	<window width="650" height="433" orientation="portrait" fps="60" background="0x000000" resizable="false" borderless="false" fullscreen="false"/>
+	
+	<source path="Source" />
+	
+	<haxelib name="openfl" />
+	
+	<assets path="Assets" rename="assets" exclude="*.svg" />
+	<icon path="Assets/openfl.svg" />
+	
+</project>
