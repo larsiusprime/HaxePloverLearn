@@ -1,0 +1,66 @@
+Lesson 3E Exercise 2
+Including Sounds from Previous Lessons
+'limp': HR*EUPL (otherwise HREUPL/-P)
+'blimp': PWHR*EUPL (otherwise PWHREUPL/-P)
+'chomp': KHO*PL
+'clamp': KHRA*PL (otherwise KHRAPL/-P)
+'damp': TKA*PL (otherwise TKAPL/-P)
+'slump': SHR*UPL (otherwise SHRUPL/-P)
+'shrimp': SHR*EUPL (otherwise SHREUPL/-P)
+'jump': SKWR*UPL (otherwise SKRWUPL/-P)
+'nerve': TPHEFRB (otherwise TPHER/*F)
+'verve': SREFRB
+'marvel': PHAFRBL (otherwise PHAR/SREL)
+'village': SREULG (otherwise SREUL/APBLG)
+'mulch': PHULG
+'bulge': PWULG (otherwise PWUL/-PBLG)
+'belch': PWELG
+'bilge': PWEULG (otherwise PWEUL/-PBLG)
+'gulch': TKPWULG
+'pillage': PEULG (otherwise PEUL/APBLG)
+'ilk': *EULG (otherwise EUL/-BG)
+'milk': PH*EULG (otherwise PHEUL/-BG)
+'bulk': PW*ULG (otherwise PWUL/-BG)
+'silk': S*EULG (otherwise SEUL/-BG)
+'bilk': PW*EULG (otherwise PWEUL/-BG)
+'wink': W*EUPBG
+'mink': PH*EUPBG
+'plank': PHRA*PBG
+'brink': PWR*EUPBG
+'blink': PWHR*EUPBG
+'blank': PWHRA*PBG
+'flank': TPHRA*PBG
+'flunk': TPHR*UPBG
+'dank': TKA*PBG
+'drink': TKR*EUPBG
+'gunk': TKPW*UPBG
+'junk': SKWR*UPBG
+'link': HR*EUPBG
+'chunk': KH*UPBG
+'lesion': HRAOEGS (otherwise HRAOR/SHUPB)
+'provision': PREUFGS
+'fusion': TPAOUGS
+'lotion': HROEGS
+'operation': PRAEUGS
+'mission': PHEUGS
+'motion': PHOEGS
+'pollution': PHRAOUGS
+'election': HREBGS
+'auction': AUBGS
+'correction': KREBGS
+'collection': KHREBGS
+'fraction': TPRABGS
+'friction': TPREUBGS
+'depiction': TKPEUBGS
+'selection': SHREBGS
+'seduction': STKUBGS
+'finch': TPEUFRPB
+'clench': KHREFRPB
+'branch': PWRAFRPB
+'march': PHAFRPB
+'lurch': HRUFRPB
+'lynch': HREUFRPB
+'birch': PWEUFRPB
+'brunch': PWRUFRPB
+'church': KHUFRPB
+'drench': TKREFRPB

@@ -1,0 +1,10 @@
+Lesson 2 Exercise 1
+Where's the TRUFT?
+'past': PAFT
+'castle': KAFL
+'stressed': STREFD
+'pressed': PREFD
+'passed': PAFD
+'test': TEFT
+'tussle': TUFL
+'crossed': KROFD

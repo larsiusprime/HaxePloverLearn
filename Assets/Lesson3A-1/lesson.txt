@@ -1,0 +1,19 @@
+Lesson 3A-1
+The Fifth Vowel Key
+'still': STEUL
+'rig': REUG
+'hit': HEUT
+'sip': SEUP
+'sir': SEUR
+'skirt': SKEURT
+'syrup': SEURP
+'pig': PEUG
+'rift': REUFT
+'scribble': SKREUBL
+'rid': REUD
+'river': REUFR
+'hid': HEUD
+'wilt': WEULT
+'wig': WEUG
+'wit': WEUT
+'spill': SPEUL

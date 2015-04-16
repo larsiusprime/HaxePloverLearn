@@ -1,0 +1,39 @@
+Lesson 3D Exercise 1
+Common Compound Clusters
+'hemp': H*EPL (otherwise HEPL/-P)
+'trump': TR*UPL (otherwise TRUPL/-P)
+'rump': R*UPL (otherwise RUPL/-P)
+'romp': RO*PL (otherwise ROPL/-P)
+'ramp': RA*PL (otherwise RAPL/-P)
+'pump': P*UPL (otherwise PUPL/-P)
+'camp': KA*PL (otherwise KAPL/-P)
+'cramp': KRA*PL (otherwise KRAPL/-P)
+'tamp': TA*PL (otherwise TAPL/-P)
+'pomp': PO*PL (otherwise POPL/-P)
+'curve': KUFRB (otherwise KUR/-F)
+'carve': KAFRB (otherwise KAR/-F)
+'serve': SEFRB (otherwise SER/-F)
+'swerve': SWEFRB (otherwise SWER/-F)
+'starve': STAFRB (otherwise STAR/-F)
+'squelch': SKWELG
+'hulk': H*ULG (otherwise HUL/-BG)
+'calc': KA*LG
+'sulk': S*ULG (otherwise SUL/-BG)
+'talc': TA*LG (otherwise TAL/-BG)
+'rank': RA*PBG (otherwise RAPB/-BG)
+'honk': HO*PBG (otherwise HOPB/-BG)
+'wonk': WO*PBG
+'prank': PRA*PBG (otherwise PRAPB/-BG)
+'crank': KRA*PBG (otherwise KRAPB/-BG)
+'tank': TA*PBG (otherwise TAPB/-BG)
+'session': SEGS (otherwise SERB/OPB)
+'option': OPGS
+'ration': RAGS
+'portion': PORGS
+'passion': PAGS
+'cushion': KUGS
+'caption': KAPGS
+'suppression': SPREGS
+'section': SEBGS
+'correction': KREBGS
+'suction': SUBGS (otherwise SUBG/SHUPB)

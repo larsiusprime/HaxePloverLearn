@@ -1,26 +1,51 @@
-package;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.events.TextEvent;
+import flash.text.TextField;
+import flash.events.KeyboardEvent;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.display.LoaderInfo;
+import flash.external.ExternalInterface;
+import ploverlearn.stenoplat.Exercise;
+import ploverlearn.stenoplat.GUIMain;
 
+/**
+ * ...
+ * @author EN
+ */
 
-import openfl.display.Bitmap;
-import openfl.display.BitmapData;
-import openfl.display.Sprite;
-import openfl.Assets;
-
-
-class Main extends Sprite {
+class Main extends Sprite
+{
+	private var fileName : String = "lesson.txt";
 	
-	
-	public function new () {
+	public function new()
+	{
+		super();
+		trace("Main: started");
+		stage.scaleMode = StageScaleMode.NO_SCALE;
+		stage.align = StageAlign.TOP_LEFT;
 		
-		super ();
-		
-		var bitmap = new Bitmap (Assets.getBitmapData ("assets/plover.jpg"));
-		addChild (bitmap);
-		
-		bitmap.x = (stage.stageWidth - bitmap.width) / 2;
-		bitmap.y = (stage.stageHeight - bitmap.height) / 2;
-		
+		if (stage != null)
+		{
+			init();
+		}
+		else
+		{
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
 	}
 	
+	private function init(e : Event = null) : Void
+	{
+		this.addChild(new GUIMain(fileName));
+	}
 	
+	private function onExerciseLoaded(exercise : Exercise){
+		trace("exercise loaded:");
+		trace(exercise);
+	}
 }
+

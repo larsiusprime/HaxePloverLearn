@@ -1,0 +1,7 @@
+Lesson 2 Exercise 3
+Inversion
+'edit': ETD
+'elves': EFLS
+'twelve': TWEFL
+'credit': KRETD
+'portal': PORLT

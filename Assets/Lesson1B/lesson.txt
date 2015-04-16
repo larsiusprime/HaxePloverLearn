@@ -1,0 +1,17 @@
+Lesson 1 Exercise 2
+Consonant Clusters
+'course': KORS
+'cover': KOFR
+'hover': HOFR
+'rabble': RABL
+'refer': REFR
+'rebel': REBL
+'robbed': ROBD
+'rubbed': RUBD
+'rubble': RUBL
+'straps': STRAPS
+'strapped': STRAPD
+'trouble': TRUBL
+'troubles': TRUBLS
+'waft': WAFT
+'webbed': WEBD

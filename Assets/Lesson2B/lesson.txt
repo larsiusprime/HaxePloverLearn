@@ -1,0 +1,18 @@
+Lesson 2 Exercise 2
+Dropping Unstressed Vowels
+'several': SEFRL
+'suppress': SPRES
+'averages': AFRGS
+'tablet': TABLT
+'tepid': TEPD
+'superb': SPERB
+'scaffold': SKAFLD
+'scarlet': SKARLT
+'starlet': STARLT
+'started': STARTD
+'ruffled': RUFLD
+'scuffled': SKUFLD
+'corrupted': KRUPTD
+'spotted': SPOTD
+'horrible': HORBL
+'effort': EFRT
