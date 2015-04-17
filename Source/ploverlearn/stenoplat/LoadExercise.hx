@@ -11,6 +11,10 @@ import openfl.Assets;
 import openfl.events.ErrorEvent;
 import openfl.events.IOErrorEvent;
 import ploverlearn.stenoplat.Exercise;
+#if sys
+	import sys.FileSystem;
+	import sys.io.File;
+#end
 
 import openfl.errors.Error;
 import flash.text.TextField;
@@ -42,18 +46,34 @@ class LoadExercise extends Sprite
 	
 	public function load()
 	{
-		var loader : URLLoader = new URLLoader();
-		loader.addEventListener(Event.COMPLETE, myCompleteHandler);
-		loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
-		trace("URLLoader: " + loader);
-		try
-		{
-			loader.load(new URLRequest(fileName));
-		}
-		catch (e : Error)
-		{
-			onError(null);
-		}
+		trace("Load");
+		#if flash
+			var loader : URLLoader = new URLLoader();
+			loader.addEventListener(Event.COMPLETE, myCompleteHandler);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+			
+			try
+			{
+				loader.load(new URLRequest(fileName));
+			}
+			catch (e : Error)
+			{
+				onError(null);
+			}
+		#elseif (sys)
+			var path = Sys.getCwd() + "assets/"+ fileName;
+			trace("path = " + path);
+			if (FileSystem.exists(path))
+			{
+				trace("exists");
+				var asset = File.getContent(path);
+				trace("asset = " + asset);
+				if (AssetCache != null)
+				{
+					onExerciseLoaded(parseFile(asset));
+				}
+			}
+		#end
 	}
 	
 	private function onError(e : Event) : Void

@@ -24,7 +24,6 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		trace("Main: started");
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		
@@ -44,7 +43,6 @@ class Main extends Sprite
 	}
 	
 	private function onExerciseLoaded(exercise : Exercise){
-		trace("exercise loaded:");
 		trace(exercise);
 	}
 }

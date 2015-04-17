@@ -5,6 +5,8 @@
 	<app main="Main" path="Export" file="StenoPlatformer" />
 	
 	<window width="700" height="480" orientation="portrait" fps="60" background="0x000000" resizable="false" borderless="false" fullscreen="false"/>
+
+	<set name="openfl-legacy" value="true"/>
 	
 	<source path="Source" />
 	

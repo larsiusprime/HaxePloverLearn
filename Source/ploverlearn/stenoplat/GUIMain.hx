@@ -34,6 +34,8 @@ class GUIMain extends Sprite
 	private var lettersTyped : Int;
 	private var fileName : String;
 	
+	private var metrics : Metrics;
+	
 	public function new(fileName)
 	{
 		super();
@@ -69,6 +71,7 @@ class GUIMain extends Sprite
 		initWordsField();
 		initInputField();
 		initHintField();
+		initMetrics();
 		
 		inputField.addEventListener(TextEvent.TEXT_INPUT, txtListener);
 		parent.addEventListener(MouseEvent.CLICK, onClick);
@@ -146,6 +149,12 @@ class GUIMain extends Sprite
 		this.addChild(hintField);
 	}
 	
+	private function initMetrics()
+	{
+		metrics = new Metrics();
+		metrics.startTime();
+	}
+	
 	private function txtListener(e : TextEvent){
 		lettersTyped++;
 		if ((inputField.text + e.text).toLowerCase().replace(" ", "") == wordsField.text.toLowerCase())
@@ -161,6 +170,8 @@ class GUIMain extends Sprite
 	
 	private function nextWord(){
 		
+		metrics.logWord(wordsField.text);
+		
 		if (exercise.hasNextWord()) {
 			exercise.nextWord();
 			wordsField.text = exercise.word();
@@ -168,12 +179,18 @@ class GUIMain extends Sprite
 			hintField.text = "hint?";
 		}
 		else {
-			endSplash.show();
+			finish();
 		}
 		
 		inputField.text = "";
 		hintField.visible = false;
 		lettersTyped = 0;
+	}
+	
+	private function finish()
+	{
+		metrics.stopTime();
+		endSplash.show(metrics);
 	}
 	
 	private function onHideSplash(){

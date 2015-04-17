@@ -14,7 +14,7 @@ import flash.text.TextFormatAlign;
 class NiceTextField extends TextField
 {
 	
-	public function new(text:String, size:Int, color:Int, alpha:Float, bold:Bool=true)
+	public function new(text:String, size:Int, color:Int, alpha:Float, bold:Bool=true, width:Float=0)
 	{
 		super();
 		this.text = text;
@@ -29,7 +29,15 @@ class NiceTextField extends TextField
 		setTextFormat(inputFieldFormat);
 		defaultTextFormat = inputFieldFormat;
 		
-		width = textWidth + 100;
+		if (width == 0)
+		{
+			this.width = textWidth + 100;
+		}
+		else
+		{
+			this.width = width;
+		}
+		
 		height = textHeight + 3;
 		selectable = false;
 	}
