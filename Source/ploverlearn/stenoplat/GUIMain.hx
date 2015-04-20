@@ -213,7 +213,9 @@ class GUIMain extends Sprite
 			metrics.logMisstroke();
 			metrics.logStreak(false);
 			
-			//TODO: watch out for edge cases where Plover "corrects" previous strokes in multi-stroke words, these would be false positives
+			//TODO: watch out for edge cases where Plover goes back and "corrects" previous strokes in multi-stroke words, these would be false positives
+			//I think a heuristic that watches to see if you are able to complete the word in say, 4 strokes or less, without ever using the delete stroke,
+			//should be able to infer that "all's well that ends well", and not count any of that as a misstroke.
 			if (misstrokes > 2)
 			{
 				hintField.visible = true;
