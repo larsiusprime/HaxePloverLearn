@@ -10,6 +10,7 @@ import flash.text.TextFormat;
 import flash.display.Bitmap;
 import openfl.Assets;
 import openfl.display.BitmapData;
+import openfl.text.TextFormatAlign;
 
 /**
  * ...
@@ -52,7 +53,7 @@ class SplashScreen extends Sprite
 		
 		headerField = new NiceTextField(header, 45, 0xffffff, 0.9);
 		infoField = new NiceTextField(info, 25, 0xffffff, 0.8);
-		metricsField = new NiceTextField("METRICS GO HERE", 20, 0xffffff, 1.0, false, 200);
+		metricsField = new NiceTextField("A\nB\nC\nD\nE\n", 20, 0xffffff, 1.0, false, this.width, TextFormatAlign.RIGHT);
 		
 		headerField.width = this.width;
 		headerField.height = 2 * headerField.textHeight + 10;
@@ -63,14 +64,14 @@ class SplashScreen extends Sprite
 		infoField.x = (width - infoField.width) / 2;
 		infoField.y = 3 * height / 4;
 		
-		metricsField.x = (width - metricsField.width) / 2;
-		metricsField.y = height - metricsField.height - 5;
-		
 		this.addChild(new Bitmap(Assets.getBitmapData("assets/plover.jpg")));
 		
 		this.addChild(infoField);
 		this.addChild(headerField);
 		this.addChild(metricsField);
+		
+		metricsField.x = (width - metricsField.width) / 2;
+		metricsField.y = height - metricsField.textHeight;
 		
 		addEventListener(MouseEvent.CLICK, buttonClick);
 		
@@ -89,8 +90,10 @@ class SplashScreen extends Sprite
 		
 		if (m != null)
 		{
-			trace("wpm = " + m.wpm);
-			metricsField.text = "WPM: " + m.wpm;
+			metricsField.text = "WPM:\t" + m.wpm;
+			metricsField.text += "\nMisstrokes:\t" + m.misstrokes;
+			metricsField.text += "\nLast Streak:\t" + m.streak;
+			metricsField.text += "\nBest Streak:\t" + m.bestStreak;
 		}
 		else
 		{

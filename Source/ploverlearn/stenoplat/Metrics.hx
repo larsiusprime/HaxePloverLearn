@@ -12,6 +12,8 @@ class Metrics
 	public var words(default, null):Int = 0;
 	public var letters(default, null):Int = 0;
 	public var misstrokes(default, null):Int = 0;
+	public var streak(default, null):Int = 0;
+	public var bestStreak(default, null):Int = 0;
 	
 	public var wpm(get, null):Int = 0;
 	
@@ -20,6 +22,27 @@ class Metrics
 	public function new() 
 	{
 		
+	}
+	
+	public function logStreak(b:Bool):Void
+	{
+		if (b)
+		{
+			streak ++;
+			if (streak > bestStreak)
+			{
+				bestStreak = streak;
+			}
+		}
+		else
+		{
+			streak = 0;
+		}
+	}
+	
+	public function logMisstroke():Void
+	{
+		misstrokes++;
 	}
 	
 	public function logWord(word:String):Void
@@ -41,6 +64,20 @@ class Metrics
 		{
 			words++;
 			letters += word.length;
+		}
+	}
+	
+	public function reset():Void
+	{
+		seconds = 0;
+		words = 0;
+		letters = 0;
+		misstrokes = 0;
+		streak = 0;
+		bestStreak = 0;
+		if (_timer != null)
+		{
+			_timer.stop();
 		}
 	}
 	

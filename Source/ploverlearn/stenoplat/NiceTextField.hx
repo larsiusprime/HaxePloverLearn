@@ -14,16 +14,21 @@ import flash.text.TextFormatAlign;
 class NiceTextField extends TextField
 {
 	
-	public function new(text:String, size:Int, color:Int, alpha:Float, bold:Bool=true, width:Float=0)
+	public function new(text:String, size:Int, color:Int, alpha:Float, bold:Bool=true, width:Float=0, align:TextFormatAlign=null)
 	{
 		super();
 		this.text = text;
 		this.alpha = alpha;
 		
+		if (align == null)
+		{
+			align = TextFormatAlign.CENTER;
+		}
+		
 		var inputFieldFormat : TextFormat = new TextFormat();
 		inputFieldFormat.size = size;
 		inputFieldFormat.bold = bold;
-		inputFieldFormat.align = TextFormatAlign.CENTER;
+		inputFieldFormat.align = align;
 		inputFieldFormat.color = color;
 		
 		setTextFormat(inputFieldFormat);

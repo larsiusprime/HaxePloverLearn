@@ -7,6 +7,8 @@ import flash.text.TextField;
 import flash.events.Event;
 import flash.events.TextEvent;
 import flash.text.TextFormat;
+import haxe.Timer;
+import openfl.Lib;
 import openfl.text.TextFormatAlign;
 import openfl.text.TextFieldType;
 
@@ -32,9 +34,16 @@ class GUIMain extends Sprite
 	private var endSplash : SplashScreen;
 	private var startSplash : SplashScreen;
 	private var lettersTyped : Int;
+	private var ploverStrokes : Int;
+	private var misstrokes : Int;
 	private var fileName : String;
 	
 	private var metrics : Metrics;
+	private var lastKeyTime:Float = 0;
+	private var _timer:Timer;
+	
+	//Plover usually has ~5ms delay between text events belonging to the same stroke, this is 6x that for a generous margin of error, should still be more than tight enough
+	private static inline var MAX_PLOVER_DELAY:Int = 30;
 	
 	public function new(fileName)
 	{
@@ -57,7 +66,8 @@ class GUIMain extends Sprite
 		loader.load();
 	}
 	
-	private function onExerciseLoaded(exercise : Exercise){
+	private function onExerciseLoaded(exercise : Exercise)
+	{
 		this.exercise = exercise;
 		
 		loadExercise();
@@ -65,7 +75,8 @@ class GUIMain extends Sprite
 	
 	
 	
-	private function loadExercise(e : Event = null){
+	private function loadExercise(e : Event = null)
+	{
 		drawBackground();
 		
 		initWordsField();
@@ -85,13 +96,15 @@ class GUIMain extends Sprite
 		nextWord();
 	}
 	
-	private function drawBackground(){
+	private function drawBackground()
+	{
 		graphics.beginFill(0x00000000);
 		graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
 		graphics.endFill();
 	}
 	
-	private function initWordsField(){
+	private function initWordsField()
+	{
 		
 		
 		var wordsFieldFormat : TextFormat = new TextFormat();
@@ -115,10 +128,8 @@ class GUIMain extends Sprite
 		this.addChild(wordsField);
 	}
 	
-	private function initInputField(){
-		
-		
-		
+	private function initInputField()
+	{
 		var inputFieldFormat : TextFormat = new TextFormat();
 		inputFieldFormat.size = 20;
 		inputFieldFormat.bold = true;
@@ -141,7 +152,8 @@ class GUIMain extends Sprite
 	}
 	
 	
-	private function initHintField(){
+	private function initHintField()
+	{
 		hintField = new NiceTextField("hint?", 20, 0xaaaaaa, 1.0, false);
 		hintField.x = (stage.stageWidth / 2) - hintField.width / 2;
 		hintField.y = 3 * stage.stageHeight / 4;
@@ -152,39 +164,86 @@ class GUIMain extends Sprite
 	private function initMetrics()
 	{
 		metrics = new Metrics();
-		metrics.startTime();
 	}
 	
-	private function txtListener(e : TextEvent){
+	private function txtListener(e : TextEvent)
+	{
+		var time = Lib.getTimer();
+		var elapsed = time - lastKeyTime;
+		lastKeyTime = time;
+		
+		trace("text input = " + e.text);
+		trace("elapsed = " + elapsed);
+		
 		lettersTyped++;
-		if ((inputField.text + e.text).toLowerCase().replace(" ", "") == wordsField.text.toLowerCase())
+		
+		if (_timer != null)
+		{
+			_timer.stop();
+		}
+		_timer = new Timer(MAX_PLOVER_DELAY);
+		
+		var str = (inputField.text + e.text).toLowerCase().replace(" ", "");
+		if (str == wordsField.text.toLowerCase())
 		{
 			nextWord();
-			
 			e.preventDefault();
 		}
-		else if (lettersTyped > 10) {
-			hintField.visible = true;
+		else
+		{
+			//set a timer, and if it runs out before the next text input event, count that as the end of the Plover stroke
+			_timer.run = function () 
+			{
+				onInputText(e);
+			}
 		}
 	}
 	
-	private function nextWord(){
-		
+	private function onInputText(e: TextEvent):Void
+	{
+		ploverStrokes++;
+		var inStr = inputField.text.toLowerCase().replace(" ", "");
+		var targStr = wordsField.text.toLowerCase();
+		if(targStr.indexOf(inStr) != 0)
+		{
+			//if the text doesn't match, count that as a misstroke
+			//note this doesn't look for a perfect match, just that what you've typed so far matches the beginning of the complete word
+			//this way it's compatible with (most) multi-stroke words
+			misstrokes++;
+			metrics.logMisstroke();
+			metrics.logStreak(false);
+			
+			//TODO: watch out for edge cases where Plover "corrects" previous strokes in multi-stroke words, these would be false positives
+			if (misstrokes > 2)
+			{
+				hintField.visible = true;
+			}
+		}
+		_timer.stop();
+	}
+	
+	private function nextWord()
+	{
 		metrics.logWord(wordsField.text);
+		metrics.logStreak(true);
 		
-		if (exercise.hasNextWord()) {
+		if (exercise.hasNextWord())
+		{
 			exercise.nextWord();
 			wordsField.text = exercise.word();
 			
 			hintField.text = "hint?";
 		}
-		else {
+		else 
+		{
 			finish();
 		}
 		
 		inputField.text = "";
 		hintField.visible = false;
 		lettersTyped = 0;
+		ploverStrokes = 0;
+		misstrokes = 0;
 	}
 	
 	private function finish()
@@ -193,23 +252,28 @@ class GUIMain extends Sprite
 		endSplash.show(metrics);
 	}
 	
-	private function onHideSplash(){
-		
+	private function onHideSplash()
+	{
 		reset();
 	}
 	
-	private function reset(){
+	private function reset()
+	{
+		metrics.reset();
+		metrics.startTime();
 		exercise.reset();
 		nextWord();
 		stage.focus = inputField;
 		inputField.text = "";
 	}
 	
-	private function onClick(e : Event){
+	private function onClick(e : Event)
+	{
 		stage.focus = inputField;
 	}
 	
-	private function onHintClick(e : Event){
+	private function onHintClick(e : Event)
+	{
 		hintField.text = exercise.hint();
 	}
 }
