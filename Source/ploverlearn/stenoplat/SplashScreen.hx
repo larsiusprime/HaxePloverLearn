@@ -27,8 +27,12 @@ class SplashScreen extends Sprite
 	private var BUFFER : Int = 50;
 	private var infoField : TextField;
 	private var metricsField : TextField;
+	private var metricsDark : Bitmap;
 	private var headerField : TextField;
 	private var onHide : Void->Void;
+	
+	private var screenHeight:Float = 0;
+	private var screenWidth:Float = 0;
 	
 	public function new(header : String, info : String, onHide : Void->Void)
 	{
@@ -55,6 +59,8 @@ class SplashScreen extends Sprite
 		infoField = new NiceTextField(info, 25, 0xffffff, 0.8);
 		metricsField = new NiceTextField("A\nB\nC\nD\nE\n", 20, 0xffffff, 1.0, false, this.width, TextFormatAlign.RIGHT);
 		
+		metricsDark = new Bitmap(new BitmapData(1, 1, true, 0x70000000));
+		
 		headerField.width = this.width;
 		headerField.height = 2 * headerField.textHeight + 10;
 		headerField.wordWrap = true;
@@ -64,14 +70,23 @@ class SplashScreen extends Sprite
 		infoField.x = (width - infoField.width) / 2;
 		infoField.y = 3 * height / 4;
 		
+		screenHeight = height;
+		screenWidth = width;
+		
 		this.addChild(new Bitmap(Assets.getBitmapData("assets/plover.jpg")));
 		
 		this.addChild(infoField);
 		this.addChild(headerField);
+		this.addChild(metricsDark);
 		this.addChild(metricsField);
 		
 		metricsField.x = (width - metricsField.width) / 2;
 		metricsField.y = height - metricsField.textHeight;
+		
+		metricsDark.width = metricsField.textWidth;
+		metricsDark.height = metricsField.textHeight;
+		metricsDark.x = metricsField.x;
+		metricsDark.y = metricsField.y;
 		
 		addEventListener(MouseEvent.CLICK, buttonClick);
 		
@@ -91,13 +106,21 @@ class SplashScreen extends Sprite
 		if (m != null)
 		{
 			metricsField.text = "WPM:\t" + m.wpm;
-			metricsField.text += "\nMisstrokes:\t" + m.misstrokes;
-			metricsField.text += "\nLast Streak:\t" + m.streak;
-			metricsField.text += "\nBest Streak:\t" + m.bestStreak;
+			metricsField.text += "\nMisstrokes:\t\t" + m.misstrokes;
+			metricsField.text += "\nLast Streak:\t\t" + m.streak;
+			metricsField.text += "\nBest Streak:\t\t" + m.bestStreak;
+			metricsField.y = screenHeight - metricsField.textHeight - 5;
+			metricsDark.width = metricsField.textWidth + 5;
+			metricsDark.height = metricsField.textHeight + 10;
+			metricsDark.x = screenWidth - metricsField.textWidth - 5;
+			metricsDark.y = metricsField.y;
+			metricsDark.visible = true;
+			metricsField.visible = true;
 		}
 		else
 		{
 			metricsField.visible = false;
+			metricsDark.visible = false;
 		}
 	}
 	

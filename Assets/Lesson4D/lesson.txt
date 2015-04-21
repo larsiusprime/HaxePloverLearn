@@ -1,0 +1,22 @@
+Lesson 4 Exercise 4
+Common Briefs 61-80
+'somebody': S-B
+'somehow': SPHOU
+'someone': SPH-PB
+'someplace': SPHRAEUS
+'something': S-G
+'sometimes': STAOEUPLS
+'somewhere': SWR or SW-R
+'question': KWE
+'almost': HR-PL
+'interest': T-R or TR
+'ever': -FR
+'became': PWAEUPL 
+'probably': PROBL
+'include': KHRU
+'includes': KHRUS
+'included': KHRUD
+'including': KHRUG
+'amount': APLT
+'receive': SAOEF
+'received': SAOEFD

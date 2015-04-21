@@ -1,0 +1,22 @@
+Lesson 4 Exercise 1
+Common Briefs 1-20
+'the': -T
+'of': F
+'to': TO
+'in': TPH
+'a': AEU
+'is': S-
+'that': THA
+'with': W
+'be': B
+'by': PWEU
+'he': E
+'I': EU
+'this': TH
+'are': R-
+'which': WEU
+'have': SR
+'they': THE
+'you': U
+'you'd': UD
+'you'll': UL

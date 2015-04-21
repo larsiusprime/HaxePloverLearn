@@ -1,0 +1,22 @@
+Lesson 4 Exercise 5
+Common Briefs 81-100
+'describe': SKREU
+'described' SKREUD
+'anything': TPHEUG
+'continue': T-PB
+'continued': T-PBD
+'beginning': TKPWEUPBG
+'understand': URPBD
+'understanding': URPBGD
+'today': TOED
+'opinion': P-PB
+'becomes': PW-BGS
+'yes': KWRE
+'idea': KWR-D
+'ideas': KWR-DZ
+'actually': TWAEUL
+'move': PHOF
+'ask': SK
+'unless': TPH-LS
+'easy': EZ
+'otherwise': O*ERZ

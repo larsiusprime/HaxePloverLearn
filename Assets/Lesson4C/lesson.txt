@@ -1,0 +1,22 @@
+Lesson 4 Exercise 3
+Common Briefs 31-60
+'very': SRE
+'many': PHAEPB
+'even': AOEPB
+'where': W-R
+'through': THRU
+'being': -BG
+'because': PWAUS
+'before': PW-F
+'upon': POPB
+'without': WOUT
+'another': TPHOER
+'against': TKPWEPBS
+'every': EFR
+'within': W-PB
+'example': KP-PL
+'others': OERS
+'therefore': THR-FR
+'having': SR-G
+'become': PW-BG
+'whether': WHR
