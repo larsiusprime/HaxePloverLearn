@@ -1,5 +1,7 @@
-HaxePloverLearn, fork of [PloverLearn](https://github.com/erika-n/PloverLearn)
+HaxePloverLearn
 ===========
+
+*a fork of [PloverLearn](https://github.com/erika-n/PloverLearn) by [Erika Nesse](https://github.com/erika-n)*
 
 Drills for the Learn Plover! book, part of the Open Steno Project. 
 
