@@ -10,7 +10,7 @@ Website: http://www.tranklements.com/PloverLearn/
 Building
 ========
 
-1. Download & install Haxe/OpenFL ([instructions](http://www.openfl.org/download/))
+1. Download & install Haxe/OpenFL ([instructions](http://www.openfl.org/documentation/getting-started/installing-openfl/))
 2. Open a command line in the same directory as project.xml
 3. Execute ```lime test flash``` to build & run the flash swf
 4. Download & install Python ([site](https://www.python.org/downloads/)) -- I used version 3.
