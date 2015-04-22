@@ -33,6 +33,7 @@ Description goes here
 'word': HINT
 ```
 
+For example:
 ```
 Lesson 2 Exercise 3
 Inversion
