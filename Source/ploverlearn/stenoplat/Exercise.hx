@@ -1,6 +1,7 @@
 package ploverlearn.stenoplat;
 
 import ploverlearn.stenoplat.LoadExercise.WordAndHint;
+import ploverlearn.stenoplat.LoadExercise.Setting;
 
 /**
  * ...
@@ -15,11 +16,16 @@ class Exercise
 	public var wordIndex : Int = -1;
 	public var random : Bool = false;
 	
-	public function new(lessonTitle:String, exerciseName:String, words:Array<WordAndHint>)
+	public var caseSensitive(default, null):Bool = false;
+	
+	public function new(lessonTitle:String, exerciseName:String, words:Array<WordAndHint>, ?settings:Array<Setting>)
 	{
 		this.lessonTitle = lessonTitle;
 		this.exerciseName = exerciseName;
 		this.words = words;
+		
+		_setSettings(settings);
+		
 		if (random)
 		{
 			randomize();
@@ -56,10 +62,30 @@ class Exercise
 		return words[wordIndex].hint;
 	}
 	
-	
 	public function randomize()
 	{
 		words.sort(_randomize);
+	}
+	
+	private function _setSettings(settings:Array<Setting>):Void
+	{
+		for (setting in settings)
+		{
+			switch(setting.name.toLowerCase())
+			{
+				case "case_sensitive": caseSensitive = boolify(setting.value);
+			}
+		}
+	}
+	
+	private function boolify(str:String):Bool
+	{
+		str = str.toLowerCase();
+		if (str == "1" || str == "true")
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	private function _randomize(a : WordAndHint, b : WordAndHint) : Int

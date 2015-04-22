@@ -183,8 +183,16 @@ class GUIMain extends Sprite
 		}
 		_timer = new Timer(MAX_PLOVER_DELAY);
 		
-		var str = (inputField.text + e.text).toLowerCase().replace(" ", "");
-		if (str == wordsField.text.toLowerCase())
+		var wordsFieldText = wordsField.text;
+		var str = (inputField.text + e.text).replace(" ", "");
+		
+		if (exercise.caseSensitive == false)
+		{
+			str = str.toLowerCase();
+			wordsFieldText = wordsFieldText.toLowerCase();
+		}
+		
+		if (str == wordsFieldText)
 		{
 			nextWord();
 			e.preventDefault();

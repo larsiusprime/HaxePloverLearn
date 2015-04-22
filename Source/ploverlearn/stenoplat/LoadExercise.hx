@@ -103,18 +103,31 @@ class LoadExercise extends Sprite
 		var lines : Array<String> = fileTxt.split("\n");
 		var lessonTitle = noreturn(lines[0]);
 		var exerciseName = noreturn(lines[1]);
-		var words : Array<WordAndHint> = new Array<WordAndHint>();
+		var words : Array<WordAndHint> = [];
+		var settings : Array<Setting> = [];
 		for (i in 2...lines.length)
 		{
 			var line : String = noreturn(lines[i]);
-			var wordAndHint : Array<String> = line.split("\': ");
-			var word : String = wordAndHint[0];
-			word = word.substring(1, word.length);
-			var hint = wordAndHint[1];
-			words.push({word:word,hint:hint});
+			var firstChar = line.charAt(0);
+			
+			if(firstChar == "'")
+			{
+				var wordAndHint : Array<String> = line.split("\': ");
+				var word : String = wordAndHint[0];
+				word = word.substring(1, word.length);
+				var hint = wordAndHint[1];
+				words.push( { word:word, hint:hint } );
+			}
+			else if(line.indexOf("=") != -1)
+			{
+				var varAndValue : Array<String> = line.split("=");
+				var name = varAndValue[0];
+				var value = varAndValue[1];
+				settings.push( { name:name, value:value } );
+			}
 		}
 		
-		return new Exercise(lessonTitle, exerciseName, words);
+		return new Exercise(lessonTitle, exerciseName, words, settings);
 	}
 	
 	private function noreturn(s : String) : String
@@ -128,3 +141,7 @@ typedef WordAndHint = {
 	var hint : String;
 }
 
+typedef Setting = {
+	var name : String;
+	var value : String;
+}
