@@ -42,6 +42,8 @@ class GUIMain extends Sprite
 	private var lastKeyTime:Float = 0;
 	private var _timer:Timer;
 	
+	private var started:Bool = false;
+	
 	//Plover usually has ~5ms delay between text events belonging to the same stroke, this is 6x that for a generous margin of error, should still be more than tight enough
 	private static inline var MAX_PLOVER_DELAY:Int = 30;
 	
@@ -209,6 +211,11 @@ class GUIMain extends Sprite
 	
 	private function onInputText(e: TextEvent):Void
 	{
+		if (!started)
+		{
+			started = true;
+			metrics.startTime();
+		}
 		ploverStrokes++;
 		var inStr = inputField.text.toLowerCase().replace(" ", "");
 		var targStr = wordsField.text.toLowerCase();
@@ -270,11 +277,11 @@ class GUIMain extends Sprite
 	private function reset()
 	{
 		metrics.reset();
-		metrics.startTime();
 		exercise.reset();
 		nextWord();
 		stage.focus = inputField;
 		inputField.text = "";
+		started = false;
 	}
 	
 	private function onClick(e : Event)
