@@ -60,12 +60,15 @@ case_sensitive=true
 
 You add settings by entering text of the format
 
-```setting=value```
+```
+setting=value
+```
 
 The recognized settings are:
 	
 	* case_sensitive : requires user to match uppercase and lowercase. False by default.
 	* require_spaces : requires user to generate spaces at the end of each word. False by default. Mostly only useful for fingerpselling exercises.
+
 
 Coming Soon
 ===========
