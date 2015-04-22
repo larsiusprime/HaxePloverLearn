@@ -26,10 +26,12 @@ Lessons
 3. Remember to run the python command (see above) to distribute the index.html files
 4. Use the correct format:
 
-Line 1: Lesson heading
-Line 2: Lesson description
-From then on: 
-	'input': HINT
+```
+Lesson X Exercise Y
+Description goes here
+'word': HINT
+'word': HINT
+```
 
 ```
 Lesson 2 Exercise 3
