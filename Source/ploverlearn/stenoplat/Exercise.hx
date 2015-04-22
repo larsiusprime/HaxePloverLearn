@@ -17,6 +17,7 @@ class Exercise
 	public var random : Bool = false;
 	
 	public var caseSensitive(default, null):Bool = false;
+	public var requireSpaces(default, null):Bool = false;
 	
 	public function new(lessonTitle:String, exerciseName:String, words:Array<WordAndHint>, ?settings:Array<Setting>)
 	{
@@ -74,6 +75,7 @@ class Exercise
 			switch(setting.name.toLowerCase())
 			{
 				case "case_sensitive": caseSensitive = boolify(setting.value);
+				case "require_spaces": requireSpaces = boolify(setting.value);
 			}
 		}
 	}

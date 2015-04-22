@@ -10,3 +10,4 @@ Fingerspelling!
 'lazy': HR* *A *STPKW KWR*
 'dog': TK* *O *TPKW
 case_sensitive=true
+require_spaces=true

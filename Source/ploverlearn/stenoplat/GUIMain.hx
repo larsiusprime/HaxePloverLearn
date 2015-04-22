@@ -29,6 +29,7 @@ class GUIMain extends Sprite
 	private var inputField : TextField;
 	private var wordsField : TextField;
 	private var hintField : TextField;
+	private var settingsField : TextField;
 	private var word : String;
 	private var exercise : Exercise;
 	private var endSplash : SplashScreen;
@@ -81,6 +82,7 @@ class GUIMain extends Sprite
 	{
 		drawBackground();
 		
+		initSettingsField();
 		initWordsField();
 		initInputField();
 		initHintField();
@@ -130,6 +132,37 @@ class GUIMain extends Sprite
 		this.addChild(wordsField);
 	}
 	
+	private function initSettingsField()
+	{
+		settingsField = new NiceTextField("settings", 15, 0xaaaaaa, 1.0, false, stage.stageWidth);
+		settingsField.height = 200;
+		settingsField.x = (stage.stageWidth / 2) - settingsField.width / 2;
+		settingsField.y = 1 * stage.stageHeight / 8;
+		
+		var strs = [];
+		
+		if (exercise.caseSensitive)
+		{
+			strs.push("CASE SENSITIVE");
+		}
+		
+		if (exercise.requireSpaces)
+		{
+			strs.push("SPACES REQUIRED");
+		}
+		
+		if (strs.length != 0)
+		{
+			settingsField.text = strs.join(", ");
+		}
+		else
+		{
+			settingsField.text = "";
+		}
+		
+		this.addChild(settingsField);
+	}
+	
 	private function initInputField()
 	{
 		var inputFieldFormat : TextFormat = new TextFormat();
@@ -174,9 +207,6 @@ class GUIMain extends Sprite
 		var elapsed = time - lastKeyTime;
 		lastKeyTime = time;
 		
-		trace("text input = " + e.text);
-		trace("elapsed = " + elapsed);
-		
 		lettersTyped++;
 		
 		if (_timer != null)
@@ -186,12 +216,22 @@ class GUIMain extends Sprite
 		_timer = new Timer(MAX_PLOVER_DELAY);
 		
 		var wordsFieldText = wordsField.text;
-		var str = (inputField.text + e.text).replace(" ", "");
+		
+		var str = (inputField.text + e.text);
 		
 		if (exercise.caseSensitive == false)
 		{
 			str = str.toLowerCase();
 			wordsFieldText = wordsFieldText.toLowerCase();
+		}
+		
+		if (exercise.requireSpaces)
+		{
+			wordsFieldText += " ";
+		}
+		else
+		{
+			str = str.replace(" ", "");
 		}
 		
 		if (str == wordsFieldText)
@@ -217,7 +257,10 @@ class GUIMain extends Sprite
 			metrics.startTime();
 		}
 		ploverStrokes++;
+		
+		
 		var inStr = inputField.text.toLowerCase().replace(" ", "");
+		
 		var targStr = wordsField.text.toLowerCase();
 		if(targStr.indexOf(inStr) != 0)
 		{
