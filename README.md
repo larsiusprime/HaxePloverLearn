@@ -26,11 +26,14 @@ Lessons
 3. Remember to run the python command (see above) to distribute the index.html files
 4. Use the correct format:
 
-Line 1: Lesson heading
-Line 2: Lesson description
-From then on: 
-	'input': HINT
+```
+Lesson X Exercise Y
+Description goes here
+'word': HINT
+'word': HINT
+```
 
+For example:
 ```
 Lesson 2 Exercise 3
 Inversion
@@ -60,12 +63,16 @@ case_sensitive=true
 
 You add settings by entering text of the format
 
-```setting=value```
+```
+setting=value
+```
 
 The recognized settings are:
 	
-	* case_sensitive : requires user to match uppercase and lowercase. False by default.
-	* require_spaces : requires user to generate spaces at the end of each word. False by default. Mostly only useful for fingerpselling exercises.
+* case_sensitive : requires user to match uppercase and lowercase. False by default.
+* require_spaces : requires user to generate spaces at the end of each word. 
+                   False by default. Mostly only useful for fingerpselling exercises.
+
 
 Coming Soon
 ===========
