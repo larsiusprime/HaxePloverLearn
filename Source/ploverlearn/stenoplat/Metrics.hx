@@ -91,7 +91,7 @@ class Metrics
 	
 	public function stopTime():Void
 	{
-		_timer.stop();
+		if(_timer != null) _timer.stop();
 	}
 	
 	private function get_wpm():Int

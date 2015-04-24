@@ -8,6 +8,6 @@ Fingerspelling!
 'over': *O SR* *E R*
 'the': T* H* *E
 'lazy': HR* *A *STPKW KWR*
-'dog': TK* *O *TPKW
+'dog.': TK* *O *TPKW -P
 case_sensitive=true
 require_spaces=true

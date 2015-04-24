@@ -76,8 +76,6 @@ class GUIMain extends Sprite
 		loadExercise();
 	}
 	
-	
-	
 	private function loadExercise(e : Event = null)
 	{
 		drawBackground();
@@ -109,8 +107,6 @@ class GUIMain extends Sprite
 	
 	private function initWordsField()
 	{
-		
-		
 		var wordsFieldFormat : TextFormat = new TextFormat();
 		wordsFieldFormat.size = 40;
 		wordsFieldFormat.bold = true;
@@ -189,7 +185,7 @@ class GUIMain extends Sprite
 	
 	private function initHintField()
 	{
-		hintField = new NiceTextField("hint?", 20, 0xaaaaaa, 1.0, false);
+		hintField = new NiceTextField("hint?", 20, 0xaaaaaa, 1.0, false, stage.stageWidth);
 		hintField.x = (stage.stageWidth / 2) - hintField.width / 2;
 		hintField.y = 3 * stage.stageHeight / 4;
 		hintField.addEventListener(MouseEvent.CLICK, onHintClick);
@@ -201,8 +197,27 @@ class GUIMain extends Sprite
 		metrics = new Metrics();
 	}
 	
+	private function wordEndsIn(word:String,arr:Array<String>):Bool
+	{
+		var end = word.length - 1;
+		for (str in arr)
+		{
+			if (word.indexOf(str) == end)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private function txtListener(e : TextEvent)
 	{
+		if (!started)
+		{
+			started = true;
+			metrics.startTime();
+		}
+		
 		var time = Lib.getTimer();
 		var elapsed = time - lastKeyTime;
 		lastKeyTime = time;
@@ -225,13 +240,13 @@ class GUIMain extends Sprite
 			wordsFieldText = wordsFieldText.toLowerCase();
 		}
 		
-		if (exercise.requireSpaces)
+		if (!exercise.requireSpaces || wordEndsIn(wordsFieldText, [".", "?", "!", ";", ":"]))
 		{
-			wordsFieldText += " ";
+			str = str.replace(" ", "");
 		}
 		else
 		{
-			str = str.replace(" ", "");
+			wordsFieldText += " ";
 		}
 		
 		if (str == wordsFieldText)
@@ -251,17 +266,26 @@ class GUIMain extends Sprite
 	
 	private function onInputText(e: TextEvent):Void
 	{
-		if (!started)
-		{
-			started = true;
-			metrics.startTime();
-		}
 		ploverStrokes++;
 		
+		var inStr = inputField.text;
+		var targStr = wordsField.text;
 		
-		var inStr = inputField.text.toLowerCase().replace(" ", "");
+		if (!exercise.caseSensitive)
+		{
+			inStr = inStr.toLowerCase();
+			targStr = targStr.toLowerCase();
+		}
 		
-		var targStr = wordsField.text.toLowerCase();
+		if (!exercise.requireSpaces || wordEndsIn(targStr, [".", "?", "!", ";", ":"]))
+		{
+			inStr = inStr.replace(" ", "");
+		}
+		else
+		{
+			targStr = targStr + " ";
+		}
+		
 		if(targStr.indexOf(inStr) != 0)
 		{
 			//if the text doesn't match, count that as a misstroke
