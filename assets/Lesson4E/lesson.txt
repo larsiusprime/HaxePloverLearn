@@ -1,7 +1,7 @@
 Lesson 4 Exercise 5
 Common Briefs 81-100
 'describe': SKREU
-'described' SKREUD
+'described': SKREUD
 'anything': TPHEUG
 'continue': T-PB
 'continued': T-PBD
