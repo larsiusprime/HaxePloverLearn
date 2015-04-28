@@ -239,7 +239,14 @@ class GUIMain extends Sprite
 			str = str.toLowerCase();
 			wordsFieldText = wordsFieldText.toLowerCase();
 		}
-		
+
+		//Plover sometimes inserts spaces between words
+		//If there's a space at the BEGINNING of user input, it is always deleted
+		while (str.indexOf(" ") == 0)
+		{
+			str = str.substr(1, str.length - 1);
+		}
+
 		if (!exercise.requireSpaces || wordEndsIn(wordsFieldText, [".", "?", "!", ";", ":"]))
 		{
 			str = str.replace(" ", "");
@@ -275,6 +282,13 @@ class GUIMain extends Sprite
 		{
 			inStr = inStr.toLowerCase();
 			targStr = targStr.toLowerCase();
+		}
+		
+		//Plover sometimes inserts spaces between words
+		//If there's a space at the BEGINNING of user input, it is always deleted
+		while (inStr.indexOf(" ") == 0)
+		{
+			inStr = inStr.substr(1, inStr.length - 1);
 		}
 		
 		if (!exercise.requireSpaces || wordEndsIn(targStr, [".", "?", "!", ";", ":"]))
