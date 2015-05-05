@@ -1,0 +1,9 @@
+Lesson 5 Exercise 3
+Suffix Compounds:
+'boldly' TKOLD/HREU
+'coldly': KOLD/HREU
+'happily': HAP/HREU
+'warmly': WARPL/HREU
+'stoically': STOEUBG/HREU
+'cider': SAOEUD/*ER
+'relation': REL/AEUGS

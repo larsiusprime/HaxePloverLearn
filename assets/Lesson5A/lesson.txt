@@ -1,0 +1,24 @@
+Lesson 5 Exercise 1
+Prefixes
+'un-': UPB
+'re-': RE
+'in-': EUPB
+'im-': EUPL
+'ir-': EUR
+'dis-': TKEUS
+'en-': EPB
+'em-': EPL
+'non-': TPHAUPB
+'over-': AUFR
+'mis-': PHEUZ
+'sub-': SAUB
+'pre-': PRE
+'inter-': EUPBT
+'fore-': TPOER
+'de-': TKE
+'trans-': TRAPBS
+'super-': SAOUP
+'semi-': SPHEU
+'anti-': A*EUPBT
+'mid-': PHEUD
+'under-': UPBD
