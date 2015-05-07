@@ -235,29 +235,11 @@ class GUIMain extends Sprite
 		}
 		_timer = new Timer(MAX_PLOVER_DELAY);
 		
-		var clean = cleanInput(inputField.text+e.text, wordsField.text);
-		var inStr = clean.input;
-		var targStr = clean.target;
-		
-		/*
-		if (inStr == targStr)
+		//set a timer, and if it runs out before the next text input event, count that as the end of the Plover stroke
+		_timer.run = function () 
 		{
-			nextWord();
-			e.preventDefault();
+			onInputText(e);
 		}
-		else
-		{
-		*/
-		
-		trace("txtListener (" + inStr + ") VS (" + targStr + ")");
-		
-			//set a timer, and if it runs out before the next text input event, count that as the end of the Plover stroke
-			_timer.run = function () 
-			{
-				onInputText(e);
-			}
-		
-		//}
 	}
 	
 	private function cleanInput(inStr:String,targStr:String):{input:String,target:String}
