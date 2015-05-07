@@ -242,6 +242,20 @@ class GUIMain extends Sprite
 		}
 	}
 	
+	private function cleanField(field:TextField):Void
+	{
+		if (exercise.ignoredChars != null)
+		{
+			for (char in exercise.ignoredChars)
+			{
+				while (field.text.indexOf(char) == 0)
+				{
+					field.text = field.text.replace(char, "");
+				}
+			}
+		}
+	}
+	
 	private function cleanInput(inStr:String,targStr:String):{input:String,target:String}
 	{
 		if (!exercise.caseSensitive)
@@ -292,7 +306,7 @@ class GUIMain extends Sprite
 		var inStr = clean.input;
 		var targStr = clean.target;
 		
-		inputField.text = clean.input;
+		cleanField(inputField);
 		
 		if (inStr == targStr)
 		{

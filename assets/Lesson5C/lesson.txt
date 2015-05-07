@@ -43,3 +43,4 @@ Prefix Compounds
 'mid-step': PHEUD/STEP
 'underdress': UPBD/TKRES
 'underwear': UPBD/WAER
+ignore_characters='-'
