@@ -46,7 +46,6 @@ class LoadExercise extends Sprite
 	
 	public function load()
 	{
-		trace("Load");
 		#if flash
 			var loader : URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, myCompleteHandler);
