@@ -22,3 +22,4 @@ Prefixes
 'anti-': A*EUPBT
 'mid-': PHEUD
 'under-': UPBD
+ignore_characters='-'

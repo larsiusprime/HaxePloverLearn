@@ -13,3 +13,4 @@ Suffixes
 '-al': A*L
 '-ial': KWRAL
 '-ness': -PBS
+ignore_characters='-'
