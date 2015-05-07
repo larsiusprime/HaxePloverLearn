@@ -43,6 +43,7 @@ class Metrics
 	public function logMisstroke():Void
 	{
 		misstrokes++;
+		trace("misstrokes = " + misstrokes);
 	}
 	
 	public function logWord(word:String):Void

@@ -37,13 +37,21 @@ class GUIMain extends Sprite
 	private var lettersTyped : Int;
 	private var ploverStrokes : Int;
 	private var misstrokes : Int;
+	
+	private var potentialMisstroke:Bool = false;
+	private var potentialDelete:Bool = false;
+	
 	private var fileName : String;
 	
 	private var metrics : Metrics;
 	private var lastKeyTime:Float = 0;
+	
 	private var _timer:Timer;
+	private var _delTimer:Timer;
 	
 	private var started:Bool = false;
+	
+	private var lastInputValue:String = "";
 	
 	//Plover usually has ~5ms delay between text events belonging to the same stroke, this is 6x that for a generous margin of error, should still be more than tight enough
 	private static inline var MAX_PLOVER_DELAY:Int = 30;
@@ -87,6 +95,7 @@ class GUIMain extends Sprite
 		initMetrics();
 		
 		inputField.addEventListener(TextEvent.TEXT_INPUT, txtListener);
+		inputField.addEventListener(Event.CHANGE, changeListener);
 		parent.addEventListener(MouseEvent.CLICK, onClick);
 		
 		endSplash = new SplashScreen(exercise.lessonTitle + "\nFinished!", "Click to re-start.", onHideSplash);
@@ -215,8 +224,36 @@ class GUIMain extends Sprite
 		return false;
 	}
 	
+	private function changeListener(e : Event)
+	{
+		if (inputField.text.length < lastInputValue.length)
+		{
+			trace("delete detected...");
+			stopDeleteTimer();
+			potentialDelete = true;
+			_delTimer = new Timer(MAX_PLOVER_DELAY);
+			//set a timer, and if it runs out before the next text input event sets potentialDelete to false, count that as the end of a genuine Plover delete stroke
+			_delTimer.run = function () 
+			{
+				onDelete();
+			}
+		}
+		lastInputValue = inputField.text;
+	}
+	
+	private function stopDeleteTimer():Void
+	{
+		if (_delTimer != null)
+		{
+			_delTimer.stop();
+		}
+	}
+	
 	private function txtListener(e : TextEvent)
 	{
+		potentialDelete = false;
+		stopDeleteTimer();
+		
 		if (!started)
 		{
 			started = true;
@@ -298,6 +335,44 @@ class GUIMain extends Sprite
 		return { input:inStr, target:targStr };
 	}
 	
+	private function onDelete():Void
+	{
+		trace("onDelete() potentialDelete = " + potentialDelete);
+		stopDeleteTimer();
+		
+		if (!potentialDelete) return;
+		
+		//If we have a genuine delete command AND a potential misstroke flagged, that's an admission of guilt:
+		// Case 1: wrong input, deleting it signifies it was a misstroke
+		// Case 2: correct input, in which case it was a misstroke to delete it!
+		
+		if (potentialMisstroke)
+		{
+			logMisstrokes(1);
+		}
+		
+		var clean = cleanInput(inputField.text, wordsField.text);
+		var inStr = clean.input;
+		var targStr = clean.target;
+		
+		if (targStr.indexOf(inStr) == 0 || inStr == "")
+		{
+			potentialMisstroke = false;		//clear out your potential misstroke only if you are now matching up with the word or are cleared out entirely
+		}
+		
+		potentialDelete = false;
+	}
+	
+	private function logMisstrokes(amount:Int=1):Void
+	{
+		misstrokes += amount;
+		for (i in 0...amount)
+		{
+			metrics.logMisstroke();
+		}
+		metrics.logStreak(false);
+	}
+	
 	private function onInputText(e: TextEvent):Void
 	{
 		ploverStrokes++;
@@ -312,15 +387,28 @@ class GUIMain extends Sprite
 		{
 			nextWord();
 			e.preventDefault();
+			potentialMisstroke = false;			//if we got the word, we clear out our potential misstroke -- all's well that ends well!
 		}
 		else if(targStr.indexOf(inStr) != 0)
 		{
 			//if the text doesn't match, count that as a misstroke
 			//note this doesn't look for a perfect match, just that what you've typed so far matches the beginning of the complete word
 			//this way it's compatible with (most) multi-stroke words
-			misstrokes++;
-			metrics.logMisstroke();
-			metrics.logStreak(false);
+			
+			//That said, sometimes Plover transforms a word with the second stroke. So give them a chance on the first error
+			//Example: "princess" is stroked "PREUPB/SES" -- which comes out like:
+			//  1: principle (PREUPB)
+			//  2: princess (PREUPB/SES)
+			if (!potentialMisstroke)
+			{
+				//First potential misstroke just gets flagged, not logged
+				potentialMisstroke = true;
+			}
+			else
+			{
+				//Second potential misstroke counts, and now we log two misstrokes
+				logMisstrokes(2);
+			}
 			
 			//TODO: watch out for edge cases where Plover goes back and "corrects" previous strokes in multi-stroke words, these would be false positives
 			//I think a heuristic that watches to see if you are able to complete the word in say, 4 strokes or less, without ever using the delete stroke,
@@ -335,6 +423,8 @@ class GUIMain extends Sprite
 	
 	private function nextWord()
 	{
+		lastInputValue = "";
+		
 		metrics.logWord(wordsField.text);
 		metrics.logStreak(true);
 		
