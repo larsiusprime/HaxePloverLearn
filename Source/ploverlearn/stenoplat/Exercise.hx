@@ -18,6 +18,7 @@ class Exercise
 	
 	public var caseSensitive(default, null):Bool = false;
 	public var requireSpaces(default, null):Bool = false;
+	public var ignoredChars(default, null):Array<String> = null;
 	
 	public function new(lessonTitle:String, exerciseName:String, words:Array<WordAndHint>, ?settings:Array<Setting>)
 	{
@@ -76,8 +77,28 @@ class Exercise
 			{
 				case "case_sensitive": caseSensitive = boolify(setting.value);
 				case "require_spaces": requireSpaces = boolify(setting.value);
+				case "ignore_characters": ignoredChars = arrayify(setting.value);
 			}
 		}
+	}
+	
+	private function arrayify(str:String):Array<String>
+	{
+		if (str == "" || str == null)
+		{
+			ignoredChars = [];
+		}
+		else
+		{
+			var firstChar = str.charAt(0);
+			var lastChar = str.charAt(str.length-1);
+			if (firstChar == "'" && lastChar == "'" || firstChar == '"' && lastChar == '"' )
+			{
+				str = str.substr(1, str.length - 2);
+			}
+			ignoredChars = str.split(",");
+		}
+		return ignoredChars;
 	}
 	
 	private function boolify(str:String):Bool

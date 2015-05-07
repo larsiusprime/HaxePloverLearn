@@ -147,6 +147,11 @@ class GUIMain extends Sprite
 			strs.push("SPACES REQUIRED");
 		}
 		
+		if (exercise.ignoredChars != null)
+		{
+			strs.push("IGNORING: (" + exercise.ignoredChars.join(",")+")");
+		}
+		
 		if (strs.length != 0)
 		{
 			settingsField.text = strs.join(", ");
@@ -230,54 +235,33 @@ class GUIMain extends Sprite
 		}
 		_timer = new Timer(MAX_PLOVER_DELAY);
 		
-		var wordsFieldText = wordsField.text;
+		var clean = cleanInput(inputField.text+e.text, wordsField.text);
+		var inStr = clean.input;
+		var targStr = clean.target;
 		
-		var str = (inputField.text + e.text);
-		
-		if (exercise.caseSensitive == false)
-		{
-			str = str.toLowerCase();
-			wordsFieldText = wordsFieldText.toLowerCase();
-		}
-
-		//Plover sometimes inserts spaces between words
-		//If there's a space at the BEGINNING of user input, it is always deleted
-		while (str.indexOf(" ") == 0)
-		{
-			str = str.substr(1, str.length - 1);
-		}
-
-		if (!exercise.requireSpaces || wordEndsIn(wordsFieldText, [".", "?", "!", ";", ":"]))
-		{
-			str = str.replace(" ", "");
-		}
-		else
-		{
-			wordsFieldText += " ";
-		}
-		
-		if (str == wordsFieldText)
+		/*
+		if (inStr == targStr)
 		{
 			nextWord();
 			e.preventDefault();
 		}
 		else
 		{
+		*/
+		
+		trace("txtListener (" + inStr + ") VS (" + targStr + ")");
+		
 			//set a timer, and if it runs out before the next text input event, count that as the end of the Plover stroke
 			_timer.run = function () 
 			{
 				onInputText(e);
 			}
-		}
+		
+		//}
 	}
 	
-	private function onInputText(e: TextEvent):Void
+	private function cleanInput(inStr:String,targStr:String):{input:String,target:String}
 	{
-		ploverStrokes++;
-		
-		var inStr = inputField.text;
-		var targStr = wordsField.text;
-		
 		if (!exercise.caseSensitive)
 		{
 			inStr = inStr.toLowerCase();
@@ -300,7 +284,40 @@ class GUIMain extends Sprite
 			targStr = targStr + " ";
 		}
 		
-		if(targStr.indexOf(inStr) != 0)
+		if (exercise.ignoredChars != null)
+		{
+			for (char in exercise.ignoredChars)
+			{
+				while (inStr.indexOf(char) != -1)
+				{
+					inStr = inStr.replace(char, "");
+				}
+				while (targStr.indexOf(char) != -1)
+				{
+					targStr = targStr.replace(char, "");
+				}
+			}
+		}
+		
+		return { input:inStr, target:targStr };
+	}
+	
+	private function onInputText(e: TextEvent):Void
+	{
+		ploverStrokes++;
+		
+		var clean = cleanInput(inputField.text, wordsField.text);
+		var inStr = clean.input;
+		var targStr = clean.target;
+		
+		inputField.text = clean.input;
+		
+		if (inStr == targStr)
+		{
+			nextWord();
+			e.preventDefault();
+		}
+		else if(targStr.indexOf(inStr) != 0)
 		{
 			//if the text doesn't match, count that as a misstroke
 			//note this doesn't look for a perfect match, just that what you've typed so far matches the beginning of the complete word
