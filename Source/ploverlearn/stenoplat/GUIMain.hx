@@ -41,12 +41,16 @@ class GUIMain extends Sprite
 	
 	private var metrics : Metrics;
 	private var lastKeyTime:Float = 0;
+	
 	private var _timer:Timer;
+	private var _deltimer:Timer;
+	private var _delarray:Array<Int>;
 	
 	private var started:Bool = false;
 	
 	//Plover usually has ~5ms delay between text events belonging to the same stroke, this is 6x that for a generous margin of error, should still be more than tight enough
 	private static inline var MAX_PLOVER_DELAY:Int = 30;
+	private static inline var BACKSPACE_KEY:Int = 8;
 	
 	public function new(fileName)
 	{
@@ -87,6 +91,7 @@ class GUIMain extends Sprite
 		initMetrics();
 		
 		inputField.addEventListener(TextEvent.TEXT_INPUT, txtListener);
+		parent.addEventListener(KeyboardEvent.KEY_DOWN, keyListener);
 		parent.addEventListener(MouseEvent.CLICK, onClick);
 		
 		endSplash = new SplashScreen(exercise.lessonTitle + "\nFinished!", "Click to re-start.", onHideSplash);
@@ -215,6 +220,62 @@ class GUIMain extends Sprite
 		return false;
 	}
 	
+	private function keyListener(e : KeyboardEvent)
+	{
+		if (_delarray == null) _delarray = [];
+		_delarray.push(e.keyCode);
+		
+		if (_deltimer != null)
+		{
+			_deltimer.stop();
+		}
+		_deltimer = new Timer(MAX_PLOVER_DELAY);
+		_deltimer.run = function ()
+		{
+			onCheckDelete();
+		}
+	}
+	
+	private function onCheckDelete()
+	{
+		var oneDelete:Bool = false;
+		var oneNormal:Bool = false;
+		
+		var allDelete:Bool = false;
+		var isTransform:Bool = false;
+		
+		for (key in _delarray)
+		{
+			if (key != BACKSPACE_KEY) oneNormal = true;
+			else oneDelete = true;
+		}
+		
+		allDelete = oneDelete && !oneNormal;
+		isTransform = oneDelete && oneNormal;
+		
+		if (allDelete)
+		{
+			onDelete();
+		}
+		if (isTransform)
+		{
+			onTransform();
+		}
+		
+		_deltimer.stop();
+		_delarray = [];
+	}
+	
+	private function onDelete():Void
+	{
+		//if I want to do something here
+	}
+	
+	private function onTransform():Void
+	{
+		metrics.forgive();
+	}
+	
 	private function txtListener(e : TextEvent)
 	{
 		if (!started)
@@ -229,10 +290,7 @@ class GUIMain extends Sprite
 		
 		lettersTyped++;
 		
-		if (_timer != null)
-		{
-			_timer.stop();
-		}
+		if (_timer != null){ _timer.stop(); }
 		_timer = new Timer(MAX_PLOVER_DELAY);
 		
 		//set a timer, and if it runs out before the next text input event, count that as the end of the Plover stroke

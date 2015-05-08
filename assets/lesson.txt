@@ -7,13 +7,13 @@ Suffix Compounds:
 'bringing': PWREUPBG/G
 'ringing': REUPBG/G
 'boldly': TKOLD/HREU
-'coldly': KOLD/HREU
+'coldly': KOELD/HREU
 'cider': SAOEUD/*ER
 'rider': RAOEUD/*ER
 'actor': ABGT/O*R
 'Hector': HEBGT/O*R
 'relation': REL/AEUGS
-'elation': EL/AEUGS
+'correlation': KOR/HRAEUGS
 'anion': AN/KWROPB
 'cation': KAT/KWROPB
 'breakable': PWRAEBG/BL
@@ -23,3 +23,4 @@ Suffix Compounds:
 'vial': SR*/KWRAL
 'happiness': HAEP/PBS
 'sadness': SAD/PBS
+case_sensitive=true

@@ -17,6 +17,7 @@ class Metrics
 	
 	public var wpm(get, null):Int = 0;
 	
+	private var _lastStreak:Int = 0;
 	private var _timer:Timer;
 	
 	public function new() 
@@ -33,6 +34,7 @@ class Metrics
 			{
 				bestStreak = streak;
 			}
+			_lastStreak = streak;
 		}
 		else
 		{
@@ -40,10 +42,15 @@ class Metrics
 		}
 	}
 	
+	public function forgive():Void
+	{
+		misstrokes--;
+		streak = _lastStreak;
+	}
+	
 	public function logMisstroke():Void
 	{
 		misstrokes++;
-		trace("misstrokes = " + misstrokes);
 	}
 	
 	public function logWord(word:String):Void
