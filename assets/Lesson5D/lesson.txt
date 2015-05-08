@@ -6,7 +6,7 @@ Suffix Compounds:
 'loaded': HROED/D
 'bringing': PWREUPBG/G
 'ringing': REUPBG/G
-'boldly' TKOLD/HREU
+'boldly': TKOLD/HREU
 'coldly': KOLD/HREU
 'cider': SAOEUD/*ER
 'rider': RAOEUD/*ER
