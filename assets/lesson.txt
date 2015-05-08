@@ -1,26 +1,5 @@
-Lesson 5 Exercise 3
-Suffix Compounds:
-'princes': PREUPBS/S
-'princess': PREUPB/SES
-'headed': HED/D
-'loaded': HROED/D
-'bringing': PWREUPBG/G
-'ringing': REUPBG/G
-'boldly': TKOLD/HREU
-'coldly': KOELD/HREU
-'cider': SAOEUD/*ER
-'rider': RAOEUD/*ER
-'actor': ABGT/O*R
-'Hector': HEBGT/O*R
-'relation': REL/AEUGS
-'correlation': KOR/HRAEUGS
-'anion': AN/KWROPB
-'cation': KAT/KWROPB
-'breakable': PWRAEBG/BL
-'fakable': TPAEBK/BL
-'fractal': TPRABGT/A*L
-'denial': TKEPB/KWRAL
-'vial': SR*/KWRAL
-'happiness': HAEP/PBS
-'sadness': SAD/PBS
-case_sensitive=true
+Lesson 0.0
+Another Test
+'course': KORS
+'cover': KOFR
+'hover': HOFR
