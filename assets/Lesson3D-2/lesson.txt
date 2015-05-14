@@ -81,7 +81,7 @@ Including Sounds from Previous Lessons
 'dung': TKUPBG
 'lung': HRUPBG
 'ping': PEUPBG
-'pong': POPBG
+'-pong': POPBG
 'among': PHOPBG
 'bring': PWREUPBG
 'young': KWRUPBG
