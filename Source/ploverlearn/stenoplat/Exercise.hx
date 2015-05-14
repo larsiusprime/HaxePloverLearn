@@ -59,6 +59,15 @@ class Exercise
 		return words[wordIndex].word;
 	}
 	
+	public function peekWord(i:Int) : String
+	{
+		if (wordIndex + i < words.length && wordIndex + i >= 0)
+		{
+			return words[wordIndex+i].word;
+		}
+		return "";
+	}
+	
 	public function hint() : String
 	{
 		return words[wordIndex].hint;

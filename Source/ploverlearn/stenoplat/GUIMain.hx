@@ -28,6 +28,7 @@ class GUIMain extends Sprite
 	private var HEIGHT : Int = 200;
 	private var inputField : TextField;
 	private var wordsField : TextField;
+	private var previewField : TextField;
 	private var hintField : TextField;
 	private var settingsField : TextField;
 	private var word : String;
@@ -88,6 +89,7 @@ class GUIMain extends Sprite
 		initWordsField();
 		initInputField();
 		initHintField();
+		initPreviewField();
 		initMetrics();
 		
 		inputField.addEventListener(TextEvent.TEXT_INPUT, txtListener);
@@ -192,6 +194,15 @@ class GUIMain extends Sprite
 		stage.focus = inputField;
 	}
 	
+	private function initPreviewField()
+	{
+		var widthLeft = (stage.stageWidth - wordsField.width) / 2;
+		previewField = new NiceTextField("preview", 20, 0x808080, 1.0, false, widthLeft, TextFormatAlign.LEFT);
+		previewField.x = widthLeft + wordsField.width;
+		previewField.y = wordsField.y + (wordsField.height - previewField.height) / 2;
+		this.addChild(previewField);
+		previewField.visible = false;
+	}
 	
 	private function initHintField()
 	{
@@ -276,12 +287,18 @@ class GUIMain extends Sprite
 		metrics.forgive();
 	}
 	
+	private function onStart():Void
+	{
+		started = true;
+		metrics.startTime();
+		previewField.visible = true;
+	}
+	
 	private function txtListener(e : TextEvent)
 	{
 		if (!started)
 		{
-			started = true;
-			metrics.startTime();
+			onStart();
 		}
 		
 		var time = Lib.getTimer();
@@ -400,7 +417,7 @@ class GUIMain extends Sprite
 		{
 			exercise.nextWord();
 			wordsField.text = exercise.word();
-			
+			previewField.text = exercise.peekWord(1) + "    " + exercise.peekWord(2) + "    " + exercise.peekWord(3);
 			hintField.text = "hint?";
 		}
 		else 

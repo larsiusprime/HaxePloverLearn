@@ -10,6 +10,7 @@ import flash.text.TextFormat;
 import flash.display.Bitmap;
 import openfl.Assets;
 import openfl.display.BitmapData;
+import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormatAlign;
 
 /**
@@ -27,6 +28,7 @@ class SplashScreen extends Sprite
 	private var BUFFER : Int = 50;
 	private var infoField : TextField;
 	private var metricsField : TextField;
+	private var metricsFieldValues : TextField;
 	private var metricsDark : Bitmap;
 	private var headerField : TextField;
 	private var onHide : Void->Void;
@@ -57,7 +59,11 @@ class SplashScreen extends Sprite
 		
 		headerField = new NiceTextField(header, 45, 0xffffff, 0.9);
 		infoField = new NiceTextField(info, 25, 0xffffff, 0.8);
-		metricsField = new NiceTextField("A\nB\nC\nD\nE\n", 20, 0xffffff, 1.0, false, this.width, TextFormatAlign.RIGHT);
+		metricsField = new NiceTextField("A\nB\nC\nD\nE\n", 20, 0xffffff, 1.0, false, this.width/4, TextFormatAlign.LEFT);
+		metricsFieldValues = new NiceTextField("A\nB\nC\nD\nE\n", 20, 0xffffff, 1.0, false, this.width/4, TextFormatAlign.RIGHT);
+		
+		metricsField.height = (20 * 6);
+		metricsFieldValues.height = metricsField.height;
 		
 		metricsDark = new Bitmap(new BitmapData(1, 1, true, 0x70000000));
 		
@@ -79,14 +85,20 @@ class SplashScreen extends Sprite
 		this.addChild(headerField);
 		this.addChild(metricsDark);
 		this.addChild(metricsField);
+		this.addChild(metricsFieldValues);
 		
-		metricsField.x = (width - metricsField.width) / 2;
-		metricsField.y = height - metricsField.textHeight;
+		metricsField.x = (width - metricsField.width);
+		metricsField.y = (height - metricsField.textHeight);
+		
+		metricsFieldValues.x = metricsField.x;
+		metricsFieldValues.y = metricsField.y;
 		
 		metricsDark.width = metricsField.textWidth;
 		metricsDark.height = metricsField.textHeight;
 		metricsDark.x = metricsField.x;
 		metricsDark.y = metricsField.y;
+		
+		metricsField.text = metricsFieldValues.text = "";
 		
 		addEventListener(MouseEvent.CLICK, buttonClick);
 		
@@ -105,14 +117,24 @@ class SplashScreen extends Sprite
 		
 		if (m != null)
 		{
-			metricsField.text = "WPM:\t" + m.wpm;
-			metricsField.text += "\nMisstrokes:\t\t" + m.misstrokes;
-			metricsField.text += "\nLast Streak:\t\t" + m.streak;
-			metricsField.text += "\nBest Streak:\t\t" + m.bestStreak;
+			metricsField.text =  "TIME:";
+			metricsField.text += "\nWPM:";
+			metricsField.text += "\nMisstrokes:";
+			metricsField.text += "\nLast Streak:";
+			metricsField.text += "\nBest Streak:";
+			
+			metricsFieldValues.text =  m.seconds + " sec.";
+			metricsFieldValues.text += "\n"+m.wpm;
+			metricsFieldValues.text += "\n"+m.misstrokes;
+			metricsFieldValues.text += "\n"+m.streak;
+			metricsFieldValues.text += "\n"+m.bestStreak;
+			
 			metricsField.y = screenHeight - metricsField.textHeight - 5;
-			metricsDark.width = metricsField.textWidth + 5;
+			metricsFieldValues.y = metricsField.y;
+			
+			metricsDark.width = metricsField.width;
 			metricsDark.height = metricsField.textHeight + 10;
-			metricsDark.x = screenWidth - metricsField.textWidth - 5;
+			metricsDark.x = screenWidth - metricsDark.width;
 			metricsDark.y = metricsField.y;
 			metricsDark.visible = true;
 			metricsField.visible = true;
