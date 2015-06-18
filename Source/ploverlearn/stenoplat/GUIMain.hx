@@ -154,6 +154,11 @@ class GUIMain extends Sprite
 			strs.push("SPACES REQUIRED");
 		}
 		
+		if (exercise.noticeSpaces)
+		{
+			strs.push("SPACES NOT REMOVED");
+		}
+		
 		if (exercise.ignoredChars != null)
 		{
 			strs.push("IGNORING: (" + exercise.ignoredChars.join(",")+")");
@@ -346,13 +351,20 @@ class GUIMain extends Sprite
 			inStr = inStr.substr(1, inStr.length - 1);
 		}
 		
-		if (!exercise.requireSpaces || wordEndsIn(targStr, [".", "?", "!", ";", ":"]))
+		//If noticeSpaces is on, don't do anything to the spaces
+		if (!exercise.noticeSpaces)
 		{
-			inStr = inStr.replace(" ", "");
-		}
-		else
-		{
-			targStr = targStr + " ";
+			//If the exercise doesn't require spaces and the word ends in punctuation
+			if (!exercise.requireSpaces || wordEndsIn(targStr, [".", "?", "!", ";", ":"]))
+			{
+				//remove all spaces from the word
+				inStr = inStr.replace(" ", "");
+			}
+			else
+			{
+				//otherwise add a space to the end
+				targStr = targStr + " ";
+			}
 		}
 		
 		if (exercise.ignoredChars != null)
